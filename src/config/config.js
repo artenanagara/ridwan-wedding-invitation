@@ -1,9 +1,9 @@
 // Nanti convert ke Bahasa Indonesia
 const config = {
   data: {
-    title: "Pernikahan Ridwan & Nadia", // Nanti ini otomatis
+    title: "Pernikahan Ridwan & Nadia", 
     description:
-      "Kami akan menikah dan mengundang Anda untuk turut merayakan momen istimewa ini.", // Nanti ini dibikin random
+      "Kami akan menikah dan mengundang Anda untuk turut merayakan momen istimewa ini.", 
     groomName: "Ridwan",
     brideName: "Nadia",
     parentGroom: "Bapak Groom & Ibu Groom",
@@ -21,23 +21,23 @@ const config = {
       {
         title: "Akad Nikah",
         date: "2025-06-12",
-        startTime: "16:16",
-        endTime: "17:30",
+        startTime: "07:00 WIB",
+        endTime: "08:00 WIB",
         location: "Masjid Al-Falah",
         address: "Polokarto, Sukoharjo, Jawa Tengah",
       },
       {
         title: "Resepsi Nikah",
         date: "2025-06-12",
-        startTime: "16:16",
-        endTime: "17:30",
+        startTime: "09:00 WIB",
+        endTime: "11:30 WIB",
         location: "Polokarto",
         address: "Polokarto, Sukoharjo, Jawa Tengah",
       }
     ],
     audio: {
-      src: "/audio/fulfilling-humming.mp3", // or /audio/nature-sound.mp3
-      title: "Fulfilling Humming", // or Nature Sound
+      src: "/audio/mangu.mp3", // or /audio/nature-sound.mp3
+      title: "Mangu - Fourtwenty", // or Nature Sound
       autoplay: true,
       loop: true
     },
