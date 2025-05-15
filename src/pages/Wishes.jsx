@@ -25,7 +25,14 @@ import {
   onSnapshot,
   serverTimestamp,
 } from 'firebase/firestore'
-import { db } from '@/firebase/config'  // Pastikan path ini sesuai dengan projectmu
+import { db } from '@/firebase/config' // Pastikan path ini sesuai dengan projectmu
+
+// Fungsi pembantu parse timestamp Firestore ke Date dengan fallback aman
+function parseTimestamp(timestamp) {
+  if (!timestamp) return new Date()
+  if (typeof timestamp.toDate === 'function') return timestamp.toDate()
+  return new Date(timestamp)
+}
 
 export default function Wishes() {
   const [showConfetti, setShowConfetti] = useState(false)
@@ -146,57 +153,61 @@ export default function Wishes() {
           <div className="max-w-2xl mx-auto space-y-6">
             <AnimatePresence>
               <Marquee speed={20} gradient={false} className="[--duration:20s] py-2">
-                {wishes.map((wish, index) => (
-                  <motion.div
-                    key={wish.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group relative w-[280px]"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-xl transform transition-transform group-hover:scale-[1.02] duration-300" />
+                {wishes.map((wish, index) => {
+                  const dateObj = parseTimestamp(wish.timestamp)
+                  return (
+                    <motion.div
+                      key={wish.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="group relative w-[280px]"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-xl transform transition-transform group-hover:scale-[1.02] duration-300" />
 
-                    <div className="relative backdrop-blur-sm bg-white/80 p-4 rounded-xl border border-rose-100/50 shadow-md">
-                      <div className="flex items-start space-x-3 mb-2">
-                        <div className="flex-shrink-0">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white text-sm font-medium">
-                            {wish.name?.[0]?.toUpperCase() ?? '?'}
+                      <div className="relative backdrop-blur-sm bg-white/80 p-4 rounded-xl border border-rose-100/50 shadow-md">
+                        <div className="flex items-start space-x-3 mb-2">
+                          <div className="flex-shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white text-sm font-medium">
+                              {wish.name?.[0]?.toUpperCase() ?? '?'}
+                            </div>
+                          </div>
+
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center space-x-2">
+                              <h4 className="font-medium text-gray-800 text-sm truncate">{wish.name}</h4>
+                              {getAttendanceIcon(wish.attending)}
+                            </div>
+                            <div className="flex items-center space-x-1 text-gray-500 text-xs">
+                              <Clock className="w-3 h-3" />
+                              <time className="truncate">{formatEventDate(dateObj)}</time>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center space-x-2">
-                            <h4 className="font-medium text-gray-800 text-sm truncate">{wish.name}</h4>
-                            {getAttendanceIcon(wish.attending)}
+                        <p className="text-gray-600 text-sm leading-relaxed mb-2 line-clamp-3">{wish.message}</p>
+
+                        {Date.now() - dateObj.getTime() < 3600000 && (
+                          <div className="absolute top-2 right-2">
+                            <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-medium">New</span>
                           </div>
-                          <div className="flex items-center space-x-1 text-gray-500 text-xs">
-                            <Clock className="w-3 h-3" />
-                            <time className="truncate">
-                              {wish.timestamp?.toDate
-                                ? formatEventDate(wish.timestamp.toDate())
-                                : formatEventDate(new Date(wish.timestamp))}
-                            </time>
-                          </div>
-                        </div>
+                        )}
                       </div>
-
-                      <p className="text-gray-600 text-sm leading-relaxed mb-2 line-clamp-3">{wish.message}</p>
-
-                      {Date.now() - new Date(wish.timestamp?.toDate?.() ?? wish.timestamp).getTime() < 3600000 && (
-                        <div className="absolute top-2 right-2">
-                          <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-medium">New</span>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  )
+                })}
               </Marquee>
             </AnimatePresence>
           </div>
 
           {/* Wishes Form */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="max-w-2xl mx-auto mt-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="max-w-2xl mx-auto mt-12"
+          >
             <form onSubmit={handleSubmitWish} className="relative">
               <div className="backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
                 <div className="space-y-2">
@@ -218,7 +229,12 @@ export default function Wishes() {
                   </div>
 
                   {/* Attendance Select */}
-                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-2 relative">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="space-y-2 relative"
+                  >
                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                       <Calendar className="w-4 h-4" />
                       <span>Apakah kamu hadir?</span>
@@ -231,7 +247,7 @@ export default function Wishes() {
                       disabled={isSubmitting}
                     >
                       <span className={attendance ? 'text-gray-700' : 'text-gray-400'}>
-                        {attendance ? options.find(opt => opt.value === attendance)?.label : 'Pilih kehadiran...'}
+                        {attendance ? options.find((opt) => opt.value === attendance)?.label : 'Pilih kehadiran...'}
                       </span>
                       <ChevronDown
                         className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
@@ -256,9 +272,7 @@ export default function Wishes() {
                               }}
                               whileHover={{ backgroundColor: 'rgb(255, 241, 242)' }}
                               className={`w-full px-4 py-2.5 text-left transition-colors ${
-                                attendance === option.value
-                                  ? 'bg-rose-50 text-rose-600'
-                                  : 'text-gray-700 hover:bg-rose-50'
+                                attendance === option.value ? 'bg-rose-50 text-rose-600' : 'text-gray-700 hover:bg-rose-50'
                               }`}
                               disabled={isSubmitting}
                             >
