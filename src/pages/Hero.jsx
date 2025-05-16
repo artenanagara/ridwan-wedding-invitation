@@ -1,5 +1,5 @@
 import { Calendar, Clock, Heart } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion} from 'framer-motion'
 import { useEffect, useState } from 'react';
 import config from '@/config/config';
 import { formatEventDate } from '@/lib/formatEventDate';
@@ -7,7 +7,7 @@ import { safeBase64 } from '@/lib/base64';
 
 export default function Hero() {
     const [guestName, setGuestName] = useState('');
-
+    
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const guestParam = urlParams.get('guest');
@@ -107,6 +107,22 @@ export default function Hero() {
     return (
         <>
             <section id="home" className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden">
+                <motion.img
+                    src="/images/atas kiri.png"
+                    alt="Pink Flower"
+                    className="pointer-events-none select-none absolute top-0 left-0 w-24 sm:w-48 opacity-70"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                />
+                <motion.img
+                    src="/images/atas kanan.png"
+                    alt="Bunga Kanan"
+                    className="pointer-events-none select-none absolute top-0 right-0 w-24 sm:w-48 opacity-70"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                />
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -235,6 +251,22 @@ export default function Hero() {
                         </motion.div>
                     </div>
                 </motion.div>
+                <motion.img
+                    src="/images/bawah kiri.png"
+                    alt="Pink Flower"
+                    className="pointer-events-none select-none absolute bottom-0 left-0 w-24 sm:w-48 opacity-70"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                />
+                <motion.img
+                    src="/images/bawah kanan.png"
+                    alt="Bunga Kanan"
+                    className="pointer-events-none select-none absolute bottom-0 right-0 w-24 sm:w-48 opacity-70"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                />
             </section>
         </>
     )

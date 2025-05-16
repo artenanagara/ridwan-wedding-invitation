@@ -16,6 +16,23 @@ export default function Location() {
                     viewport={{ once: true }}
                     className="text-center space-y-4 mb-16"
                 >
+                    <motion.img
+                        src="/images/pink-kiri.png"
+                        alt="Pink Flower"
+                        className="pointer-events-none select-none absolute top-0 left-0 w-24 sm:w-64"
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1.2, ease: 'easeOut' }}
+                    />
+                    {/* Tambahkan gambar bunga kanan */}
+                    <motion.img
+                        src="/images/pink-kanan.png"
+                        alt="Bunga Kanan"
+                        className="pointer-events-none select-none absolute -top-5 right-0 w-24 sm:w-64 "
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1.2, ease: 'easeOut' }}
+                    />
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
