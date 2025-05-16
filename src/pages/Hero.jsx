@@ -252,17 +252,9 @@ export default function Hero() {
                     </div>
                 </motion.div>
                 <motion.img
-                    src="/images/bawah kiri.png"
-                    alt="Pink Flower"
-                    className="pointer-events-none select-none absolute bottom-0 left-0 w-24 sm:w-48 opacity-70"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1.2, ease: 'easeOut' }}
-                />
-                <motion.img
                     src="/images/bawah kanan.png"
                     alt="Bunga Kanan"
-                    className="pointer-events-none select-none absolute bottom-0 right-0 w-24 sm:w-48 opacity-70"
+                    className="pointer-events-none select-none absolute bottom-4 right-0 w-24 sm:w-48 opacity-70"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1.2, ease: 'easeOut' }}

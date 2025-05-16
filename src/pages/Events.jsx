@@ -8,20 +8,15 @@ export default function Events() {
         <>
             {/* Event Section */}
             <section id="event" className="min-h-screen relative overflow-hidden">
-                {/* Tambahkan gambar bunga kiri */}
-                <img
-                    src="/images/pink-kiri.png"
+                <motion.img
+                    src="/images/atas kiri.png"
                     alt="Pink Flower"
-                    className="pointer-events-none select-none absolute top-0 left-0 w-24 sm:w-64 opacity-70"
-                    style={{ userSelect: "none" }}
+                    className="pointer-events-none select-none absolute top-0 left-0 w-24 sm:w-48 opacity-70"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
                 />
-                {/* Tambahkan gambar bunga kanan */}
-                <img
-                    src="/images/pink-kanan.png"
-                    alt="Bunga Kanan"
-                    className="pointer-events-none select-none absolute top-0 right-0 w-24 sm:w-64 opacity-70"
-                    style={{ userSelect: "none" }}
-                />
+        
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -29,19 +24,6 @@ export default function Events() {
                     transition={{ duration: 0.8 }}
                     className="relative z-10 container mx-auto px-4 py-20"
                 >
-                     <img
-                    src="/images/pink-kiri.png"
-                    alt="Pink Flower"
-                    className="pointer-events-none select-none absolute top-0 left-0 w-24 sm:w-64 opacity-70"
-                    style={{ userSelect: "none" }}
-                />
-                {/* Tambahkan gambar bunga kanan */}
-                <img
-                    src="/images/pink-kanan.png"
-                    alt="Bunga Kanan"
-                    className="pointer-events-none select-none absolute top-0 right-0 w-24 sm:w-64 opacity-70"
-                    style={{ userSelect: "none" }}
-                />
                     {/* Section Header */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
